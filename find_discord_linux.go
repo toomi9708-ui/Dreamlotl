@@ -125,8 +125,12 @@ func ParseDiscord(p, _ string) *DiscordInstall {
 	app := path.Join(resources, "app")
 
 	isPatched, isSystemElectron := false, false
+	appPath := app
 
-	if ExistsFile(app) { // normal install
+	if ExistsFile(app) { // normal install (resources/app directory exists)
+		isPatched = ExistsFile(path.Join(resources, "_app.asar"))
+	} else if ExistsFile(path.Join(resources, "app.asar")) { // app.asar directly in resources/ instead of resources/app
+		appPath = path.Join(resources, "app.asar")
 		isPatched = ExistsFile(path.Join(resources, "_app.asar"))
 	} else if ExistsFile(path.Join(p, "app.asar")) { // System electron doesn't have resources folder
 		isSystemElectron = true
@@ -138,7 +142,7 @@ func ParseDiscord(p, _ string) *DiscordInstall {
 	return &DiscordInstall{
 		path:             p,
 		branch:           GetBranch(name),
-		appPath:          app,
+		appPath:          appPath,
 		isPatched:        isPatched,
 		isFlatpak:        needsFlatpakResolve,
 		isSystemElectron: isSystemElectron,
