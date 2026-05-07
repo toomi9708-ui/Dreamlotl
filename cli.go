@@ -242,13 +242,11 @@ func PromptDiscord(action, dir, branch string) *DiscordInstall {
 	}
 
 	if dir != "" {
-		if discord := ParseDiscordNew(dir, branch, false); discord != nil {
-			return discord
-		}
 		if discord := ParseDiscord(dir, branch); discord != nil {
 			return discord
+		} else {
+			die(dir + " is not a valid Discord install. Hint: snap is not supported")
 		}
-		die(dir + " is not a valid Discord install. Hint: snap is not supported")
 	}
 
 	items := SliceMap(discords, func(d any) string {

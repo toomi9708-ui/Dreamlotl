@@ -60,6 +60,8 @@ func init() {
 		path.Join(Home, ".local/share"),
 		path.Join(Home, ".local/bin"),
 		path.Join(Home, ".dvm"),
+		path.Join(Home, ".config"),
+		path.Join(Home, ".var/app"),
 		"/var/lib/flatpak/app",
 		path.Join(Home, "/.local/share/flatpak/app"),
 	}
@@ -111,14 +113,19 @@ func ParseDiscordNew(p, branch string, isFlatpak bool) *DiscordInstall {
 func ParseDiscord(p, _ string) *DiscordInstall {
 	name := path.Base(p)
 
-	needsFlatpakResolve := strings.Contains(p, "/flatpak/") && !strings.Contains(p, "/current/active/files/")
+	needsFlatpakResolve := (strings.Contains(p, "/flatpak/") || strings.Contains(p, "/.var/app/")) &&
+		!strings.Contains(p, "/current/active/files/")
 	if needsFlatpakResolve {
 		discordName := strings.ToLower(name[len("com.discordapp."):])
-		if discordName != "discord" { //
+		if discordName != "discord" {
 			// DiscordCanary -> discord-canary
 			discordName = discordName[:7] + "-" + discordName[7:]
 		}
 		p = path.Join(p, "current/active/files", discordName)
+	}
+
+	if di := ParseDiscordNew(p, GetBranch(name), needsFlatpakResolve); di != nil {
+		return di
 	}
 
 	resources := path.Join(p, "resources")
@@ -163,32 +170,15 @@ func FindDiscords() []any {
 			}
 
 			discordDir := path.Join(dir, name)
+
+			if strings.HasPrefix(name, "com.discordapp.") && strings.Contains(dir, ".var/app") {
+				discordDir = path.Join(discordDir, "config/discord")
+			}
+
 			if discord := ParseDiscord(discordDir, ""); discord != nil {
 				Log.Debug("Found Discord install at ", discordDir)
 				discords = append(discords, discord)
 			}
-		}
-	}
-
-	for _, name := range []string{"discord", "discordcanary", "discordptb"} {
-		discordDir := path.Join(Home, ".config", name)
-		if !ExistsFile(discordDir) {
-			continue
-		}
-		if discord := ParseDiscordNew(discordDir, GetBranch(name), false); discord != nil {
-			Log.Debug("Found Discord install at ", discordDir)
-			discords = append(discords, discord)
-		}
-	}
-
-	for _, name := range []string{"Discord", "DiscordCanary", "DiscordPTB"} {
-		discordDir := path.Join(Home, ".var/app", "com.discordapp."+name, "config/discord")
-		if !ExistsFile(discordDir) {
-			continue
-		}
-		if discord := ParseDiscordNew(discordDir, GetBranch(name), true); discord != nil {
-			Log.Debug("Found Discord install at ", discordDir)
-			discords = append(discords, discord)
 		}
 	}
 
