@@ -1,6 +1,6 @@
-$link = "https://github.com/Dreamcord/Equilotl/releases/latest/download/EquilotlCli.exe"
+$link = "https://github.com/Dreamcord/Dreamlotl/releases/latest/download/DreamlotlCli.exe"
 
-$outfile = "$env:TEMP\EquilotlCli.exe"
+$outfile = "$env:TEMP\DreamlotlCli.exe"
 
 Write-Output "Downloading installer to $outfile"
 

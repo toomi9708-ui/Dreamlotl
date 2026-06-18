@@ -1,4 +1,4 @@
-# Equilotl
+# Dreamlotl
 
 The Dreamcord Installer allows you to install [Dreamcord, the cutest Discord Desktop client mod](https://github.com/Dreamcord/Dreamcord)
 
@@ -8,18 +8,18 @@ The Dreamcord Installer allows you to install [Dreamcord, the cutest Discord Des
 
 Windows
 
-- [GUI](https://github.com/Dreamcord/Equilotl/releases/latest/download/Equilotl.exe)
-- [CLI](https://github.com/Dreamcord/Equilotl/releases/latest/download/EquilotlCli.exe)
+- [GUI](https://github.com/Dreamcord/Dreamlotl/releases/latest/download/Dreamlotl.exe)
+- [CLI](https://github.com/Dreamcord/Dreamlotl/releases/latest/download/DreamlotlCli.exe)
 
 MacOS
 
-- [X64 GUI](https://github.com/Dreamcord/Equilotl/releases/latest/download/Equilotl-darwin-x64.zip)
-- [ARM64 GUI](https://github.com/Dreamcord/Equilotl/releases/latest/download/Equilotl-darwin-arm64.zip)
+- [X64 GUI](https://github.com/Dreamcord/Dreamlotl/releases/latest/download/Dreamlotl-darwin-x64.zip)
+- [ARM64 GUI](https://github.com/Dreamcord/Dreamlotl/releases/latest/download/Dreamlotl-darwin-arm64.zip)
 
 Linux
 
-- [GUI](https://github.com/Dreamcord/Equilotl/releases/latest/download/Equilotl-x11)
-- [CLI](https://github.com/Dreamcord/Equilotl/releases/latest/download/EquilotlCli-Linux)
+- [GUI](https://github.com/Dreamcord/Dreamlotl/releases/latest/download/Dreamlotl-x11)
+- [CLI](https://github.com/Dreamcord/Dreamlotl/releases/latest/download/DreamlotlCli-Linux)
 
 ## Building from source
 
@@ -82,4 +82,4 @@ go build --tags cli
 ```
 
 You might want to pass some flags to this command to get a better build.
-See [the GitHub workflow](https://github.com/Dreamcord/Equilotl/blob/main/.github/workflows/release.yml) for what flags I pass or if you want more precise instructions
+See [the GitHub workflow](https://github.com/Dreamcord/Dreamlotl/blob/main/.github/workflows/release.yml) for what flags I pass or if you want more precise instructions

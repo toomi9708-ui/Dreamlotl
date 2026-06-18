@@ -52,42 +52,42 @@ jobs:
           CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -v -tags static -ldflags "-s
           -w -X 'dreamlotl/buildinfo.InstallerGitHash=$(git rev-parse --short
           HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{ github.ref_name }}'" -o
-          Equilotl-x11
+          Dreamlotl-x11
 
       - name: Build GUI (Wayland)
         run:
           CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -v -tags "static wayland"
           -ldflags "-s -w -X 'dreamlotl/buildinfo.InstallerGitHash=$(git
           rev-parse --short HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{
-          github.ref_name }}'" -o Equilotl-wayland
+          github.ref_name }}'" -o Dreamlotl-wayland
 
       - name: Build GUI (Combined)
         run:
           CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -v -tags "static combined"
           -ldflags "-s -w -X 'dreamlotl/buildinfo.InstallerGitHash=$(git
           rev-parse --short HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{
-          github.ref_name }}'" -o Equilotl
+          github.ref_name }}'" -o Dreamlotl
 
       - name: Build CLI
         run:
           CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -v -tags "cli" -ldflags "-s
           -w -X 'dreamlotl/buildinfo.InstallerGitHash=$(git rev-parse --short
           HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{ github.ref_name }}'" -o
-          EquilotlCli-linux
+          DreamlotlCli-linux
 
       - name: Update executable
         run: |
-          chmod +x Equilotl*
+          chmod +x Dreamlotl*
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
-          name: Equilotl-linux
+          name: Dreamlotl-linux
           path: |
-            Equilotl-x11
-            Equilotl-wayland
-            Equilotl
-            EquilotlCli-linux
+            Dreamlotl-x11
+            Dreamlotl-wayland
+            Dreamlotl
+            DreamlotlCli-linux
 
   build-mac:
     runs-on: ${{ matrix.runner }}
@@ -97,14 +97,14 @@ jobs:
         include:
           - arch: amd64
             runner: macos-15-intel
-            artifact_name: Equilotl-macos
-            gui_name: Equilotl-darwin-x64.zip
-            cli_name: EquilotlCli-darwin-x64
+            artifact_name: Dreamlotl-macos
+            gui_name: Dreamlotl-darwin-x64.zip
+            cli_name: DreamlotlCli-darwin-x64
           - arch: arm64
             runner: macos-latest
-            artifact_name: Equilotl-macos-arm64
-            gui_name: Equilotl-darwin-arm64.zip
-            cli_name: EquilotlCli-darwin-arm64
+            artifact_name: Dreamlotl-macos-arm64
+            gui_name: Dreamlotl-darwin-arm64.zip
+            cli_name: DreamlotlCli-darwin-arm64
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -135,7 +135,7 @@ jobs:
           GOARCH=${{ matrix.arch }} go build -v -tags "static gui" -ldflags "-s
           -w -X 'dreamlotl/buildinfo.InstallerGitHash=$(git rev-parse --short
           HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{ github.ref_name }}'" -o
-          Equilotl
+          Dreamlotl
 
       - name: Build CLI
         run: CGO_CFLAGS="-mmacosx-version-min=10.15"
@@ -147,15 +147,15 @@ jobs:
 
       - name: Update executable
         run: |
-          chmod +x Equilotl*
+          chmod +x Dreamlotl*
 
       - name: Generate MacOS GUI bundle
         run: |
-          mkdir -p Equilotl.app/Contents/MacOS
-          mkdir -p Equilotl.app/Contents/Resources
-          cp macos/Info.plist Equilotl.app/Contents/Info.plist
-          mv Equilotl Equilotl.app/Contents/MacOS/Equilotl
-          cp macos/icon.icns Equilotl.app/Contents/Resources/icon.icns
+          mkdir -p Dreamlotl.app/Contents/MacOS
+          mkdir -p Dreamlotl.app/Contents/Resources
+          cp macos/Info.plist Dreamlotl.app/Contents/Info.plist
+          mv Dreamlotl Dreamlotl.app/Contents/MacOS/Dreamlotl
+          cp macos/icon.icns Dreamlotl.app/Contents/Resources/icon.icns
 
       - name: Import signing certificate
         env:
@@ -172,8 +172,8 @@ jobs:
 
       - name: Sign the executables
         run: |
-          codesign --force --options runtime --sign "Developer ID Application" Equilotl.app/Contents/MacOS/Equilotl
-          codesign --force --options runtime --sign "Developer ID Application" Equilotl.app
+          codesign --force --options runtime --sign "Developer ID Application" Dreamlotl.app/Contents/MacOS/Dreamlotl
+          codesign --force --options runtime --sign "Developer ID Application" Dreamlotl.app
           codesign --force --options runtime --sign "Developer ID Application" ${{ matrix.cli_name }}
 
       - name: Notarize the executables
@@ -183,15 +183,15 @@ jobs:
           APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
         run: |
           echo "$API_KEY" > apple.p8
-          ditto -c -k --keepParent Equilotl.app Equilotl-notarize.zip
-          ditto -c -k ${{ matrix.cli_name }} EquilotlCli-notarize.zip
-          xcrun notarytool submit Equilotl-notarize.zip --key apple.p8 --key-id "$APPLE_API_KEY_ID" --issuer "$APPLE_API_ISSUER" --wait
-          xcrun stapler staple Equilotl.app
-          xcrun notarytool submit EquilotlCli-notarize.zip --key apple.p8 --key-id "$APPLE_API_KEY_ID" --issuer "$APPLE_API_ISSUER" --wait
-          rm apple.p8 Equilotl-notarize.zip EquilotlCli-notarize.zip
+          ditto -c -k --keepParent Dreamlotl.app Dreamlotl-notarize.zip
+          ditto -c -k ${{ matrix.cli_name }} DreamlotlCli-notarize.zip
+          xcrun notarytool submit Dreamlotl-notarize.zip --key apple.p8 --key-id "$APPLE_API_KEY_ID" --issuer "$APPLE_API_ISSUER" --wait
+          xcrun stapler staple Dreamlotl.app
+          xcrun notarytool submit DreamlotlCli-notarize.zip --key apple.p8 --key-id "$APPLE_API_KEY_ID" --issuer "$APPLE_API_ISSUER" --wait
+          rm apple.p8 Dreamlotl-notarize.zip DreamlotlCli-notarize.zip
 
       - name: Create final zip
-        run: zip -r ${{ matrix.gui_name }} Equilotl.app
+        run: zip -r ${{ matrix.gui_name }} Dreamlotl.app
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7
@@ -242,20 +242,20 @@ jobs:
         shell: msys2 {0}
         run: |
           go-winres make --product-version "git-tag"
-          CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build -v -tags "static gui" -ldflags "-s -w -H=windowsgui -extldflags=-static -X 'dreamlotl/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{ github.ref_name }}'" -o Equilotl.exe
+          CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build -v -tags "static gui" -ldflags "-s -w -H=windowsgui -extldflags=-static -X 'dreamlotl/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{ github.ref_name }}'" -o Dreamlotl.exe
 
       - name: Build CLI
         shell: msys2 {0}
         run: |
-          CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build -v -tags "cli" -ldflags "-s -w -X 'dreamlotl/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{ github.ref_name }}'" -o EquilotlCli.exe
+          CGO_ENABLED=1 GOOS=windows GOARCH=amd64 go build -v -tags "cli" -ldflags "-s -w -X 'dreamlotl/buildinfo.InstallerGitHash=$(git rev-parse --short HEAD)' -X 'dreamlotl/buildinfo.InstallerTag=${{ github.ref_name }}'" -o DreamlotlCli.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
-          name: Equilotl-windows
+          name: Dreamlotl-windows
           path: |
-            Equilotl.exe
-            EquilotlCli.exe
+            Dreamlotl.exe
+            DreamlotlCli.exe
 
   release:
     runs-on: ubuntu-latest
@@ -268,24 +268,24 @@ jobs:
       - name: "Download Linux Artifacts"
         uses: actions/download-artifact@v8
         with:
-          name: Equilotl-linux
+          name: Dreamlotl-linux
           path: linux
 
       - name: "Download MacOS Artifacts"
         uses: actions/download-artifact@v8
         with:
-          name: Equilotl-macos
+          name: Dreamlotl-macos
           path: macos
 
       - uses: actions/download-artifact@v8
         with:
-          name: Equilotl-macos-arm64
+          name: Dreamlotl-macos-arm64
           path: macos
 
       - name: "Download Windows Artifacts"
         uses: actions/download-artifact@v8
         with:
-          name: Equilotl-windows
+          name: Dreamlotl-windows
           path: windows
 
       - name: Delete existing release
@@ -303,14 +303,14 @@ jobs:
           prerelease: ${{ contains(github.ref_name, '-') }}
           draft: false
           body: |
-            This is release ${{ github.ref_name }} of Equilotl.
+            This is release ${{ github.ref_name }} of Dreamlotl.
           files: |
-            linux/Equilotl-x11
-            linux/Equilotl-wayland
-            linux/Equilotl
-            linux/EquilotlCli-linux
-            macos/Equilotl-darwin-x64.zip
-            macos/Equilotl-darwin-arm64.zip
-            macos/EquilotlCli-darwin-x64
-            macos/EquilotlCli-darwin-arm64
-            windows/Equilotl*.exe
+            linux/Dreamlotl-x11
+            linux/Dreamlotl-wayland
+            linux/Dreamlotl
+            linux/DreamlotlCli-linux
+            macos/Dreamlotl-darwin-x64.zip
+            macos/Dreamlotl-darwin-arm64.zip
+            macos/DreamlotlCli-darwin-x64
+            macos/DreamlotlCli-darwin-arm64
+            windows/Dreamlotl*.exe

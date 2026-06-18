@@ -73,7 +73,7 @@ func main() {
 	}
 
 	if *versionFlag {
-		fmt.Println("Equilotl Cli", buildinfo.InstallerTag, "("+buildinfo.InstallerGitHash+")")
+		fmt.Println("Dreamlotl Cli", buildinfo.InstallerTag, "("+buildinfo.InstallerGitHash+")")
 		fmt.Println("Copyright (C) 2026 Vendicated, thororen1234, Vencord, and Dreamcord contributors")
 		fmt.Println("License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.")
 		return
@@ -113,7 +113,7 @@ func main() {
 			<-SelfUpdateCheckDoneChan
 			if IsSelfOutdated {
 				Log.Warn("Your installer is outdated.")
-				Log.Warn("To update, select the 'Update Equilotl' option to update, or run with --update-self")
+				Log.Warn("To update, select the 'Update Dreamlotl' option to update, or run with --update-self")
 			}
 		}()
 
@@ -124,7 +124,7 @@ func main() {
 			"Install OpenAsar",
 			"Uninstall OpenAsar",
 			"View Help Menu",
-			"Update Equilotl",
+			"Update Dreamlotl",
 			"Quit",
 		}
 		_, choice, err := (&promptui.Select{
@@ -140,7 +140,7 @@ func main() {
 			return
 		case "Quit":
 			return
-		case "Update Equilotl":
+		case "Update Dreamlotl":
 			if err := UpdateSelf(); err != nil {
 				Log.Error("Failed to update self:", err)
 				exitFailure()
