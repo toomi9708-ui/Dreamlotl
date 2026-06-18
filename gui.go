@@ -10,8 +10,8 @@ package main
 
 import (
 	"bytes"
-	_ "embed"
 	"dreamlotl/buildinfo"
+	_ "embed"
 	"errors"
 	"image"
 	"image/color"
