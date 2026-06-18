@@ -11,10 +11,10 @@ import (
 	"image/color"
 )
 
-const ReleaseUrl = "https://api.github.com/repos/Dreamcord/Dreamcord/releases/latest"
-const ReleaseUrlFallback = "https://dreamcord.org/releases/dreamcord"
-const InstallerReleaseUrl = "https://api.github.com/repos/Dreamcord/Dreamlotl/releases/latest"
-const InstallerReleaseUrlFallback = "https://dreamcord.org/releases/dreamlotl"
+const ReleaseUrl = "https://github.com"
+const ReleaseUrlFallback = "https://github.com"
+const InstallerReleaseUrl = "https://github.com"
+const InstallerReleaseUrlFallback = "https://github.com"
 
 var UserAgent = "Dreamlotl/" + buildinfo.InstallerGitHash + " (https://github.com/Dreamcord/Dreamlotl)"
 
