@@ -7,14 +7,14 @@
 package main
 
 import (
-	"equilotl/buildinfo"
+	"dreamlotl/buildinfo"
 	"image/color"
 )
 
 const ReleaseUrl = "https://api.github.com/repos/Dreamcord/Dreamcord/releases/latest"
 const ReleaseUrlFallback = "https://dreamcord.org/releases/dreamcord"
 const InstallerReleaseUrl = "https://api.github.com/repos/Dreamcord/Equilotl/releases/latest"
-const InstallerReleaseUrlFallback = "https://dreamcord.org/releases/equilotl"
+const InstallerReleaseUrlFallback = "https://dreamcord.org/releases/dreamlotl"
 
 var UserAgent = "Equilotl/" + buildinfo.InstallerGitHash + " (https://github.com/Dreamcord/Equilotl)"
 

@@ -1,4 +1,4 @@
-module equilotl
+module dreamlotl
 
 go 1.26.2
 

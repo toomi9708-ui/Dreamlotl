@@ -9,7 +9,7 @@
         <string>icon.icns</string>
 
         <key>CFBundleIdentifier</key>
-        <string>org.dreamcord.equilotl</string>
+        <string>org.dreamcord.dreamlotl</string>
 
         <key>NSHighResolutionCapable</key>
         <true/>

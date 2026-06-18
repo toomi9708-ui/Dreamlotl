@@ -7,7 +7,7 @@
 package main
 
 import (
-	"equilotl/buildinfo"
+	"dreamlotl/buildinfo"
 	"errors"
 	"fmt"
 	"io"

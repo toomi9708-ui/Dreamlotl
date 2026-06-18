@@ -11,7 +11,7 @@ package main
 import (
 	"bytes"
 	_ "embed"
-	"equilotl/buildinfo"
+	"dreamlotl/buildinfo"
 	"errors"
 	"image"
 	"image/color"

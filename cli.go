@@ -10,7 +10,7 @@ package main
 
 import (
 	"bytes"
-	"equilotl/buildinfo"
+	"dreamlotl/buildinfo"
 	"errors"
 	"flag"
 	"fmt"
