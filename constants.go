@@ -11,12 +11,12 @@ import (
 	"image/color"
 )
 
-const ReleaseUrl = "https://github.com"
-const ReleaseUrlFallback = "https://github.com"
-const InstallerReleaseUrl = "https://github.com"
-const InstallerReleaseUrlFallback = "https://github.com"
+const ReleaseUrl = "https://api.github.com/repos/toomi9708-ui/Dreamcord/releases/latest"
+const ReleaseUrlFallback = "SOON"
+const InstallerReleaseUrl = "https://api.github.com/repos/toomi9708-ui/Dreamlotl/releases/latest"
+const InstallerReleaseUrlFallback = "SOON"
 
-var UserAgent = "Dreamlotl/" + buildinfo.InstallerGitHash + " (https://github.com/Dreamcord/Dreamlotl)"
+var UserAgent = "Dreamlotl/" + buildinfo.InstallerGitHash + " (https://github.com/toomi9708-ui/Dreamlotl)"
 
 var (
 	DiscordGreen  = color.RGBA{R: 0x2D, G: 0x7C, B: 0x46, A: 0xFF}
